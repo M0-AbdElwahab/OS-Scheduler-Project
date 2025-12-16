@@ -11,7 +11,7 @@ public class PreemptiveSJF {
         this.contextSwitch = contextSwitch;
         this.executionOrder = new ArrayList<>();
     }
-    // Get processes list for testing
+
     public List<Process> getProcesses() {
         return processes;
     }
@@ -32,7 +32,6 @@ public class PreemptiveSJF {
                         shortestTime = p.getRemainingTime();
                         currentProcess = p;
                     } else if (p.getRemainingTime() == shortestTime) {
-                        // If same remaining time, choose the one that arrived first
                         if (currentProcess == null || p.getArrivalTime() < currentProcess.getArrivalTime()) {
                             currentProcess = p;
                         }
@@ -41,23 +40,20 @@ public class PreemptiveSJF {
             }
 
             if (currentProcess == null) {
-                // No process available, CPU is idle
                 currentTime++;
                 continue;
             }
 
-            // Add context switch time if switching to a different process
+
             if (lastProcess != null && lastProcess != currentProcess) {
                 currentTime += contextSwitch;
             }
 
-            // Execute the current process for 1 time unit
             executionOrder.add(currentProcess.getName());
             currentProcess.setRemainingTime(currentProcess.getRemainingTime() - 1);
             currentTime++;
             lastProcess = currentProcess;
 
-            // If process is completed
             if (currentProcess.getRemainingTime() == 0) {
                 completed++;
                 currentProcess.setCompletionTime(currentTime);
@@ -65,5 +61,37 @@ public class PreemptiveSJF {
                 currentProcess.setWaitingTime(currentProcess.getTurnaroundTime() - currentProcess.getBurstTime());
             }
         }
+        
+        printResults();
+    }
+    
+    private void printResults() {
+        System.out.println("\n===== Preemptive SJF Scheduling =====");
+        
+        System.out.print("Execution Order: ");
+        String prev = "";
+        for (String p : executionOrder) {
+            if (!p.equals(prev)) {
+                System.out.print(p + " ");
+                prev = p;
+            }
+        }
+        System.out.println();
+        
+        double totalWT = 0;
+        double totalTAT = 0;
+        
+        System.out.println("\nProcess Details:");
+        processes.sort(Comparator.comparing(Process::getName));
+        
+        for (Process p : processes) {
+            System.out.println(p.getName() + " - Waiting Time: " + 
+                p.getWaitingTime() + ", Turnaround Time: " + p.getTurnaroundTime());
+            totalWT += p.getWaitingTime();
+            totalTAT += p.getTurnaroundTime();
+        }
+        
+        System.out.printf("\nAverage Waiting Time: %.2f\n", totalWT / processes.size());
+        System.out.printf("Average Turnaround Time: %.2f\n", totalTAT / processes.size());
     }
 }

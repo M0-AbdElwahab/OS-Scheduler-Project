@@ -8,13 +8,13 @@ public class PriorityScheduler {
     private final int contextSwitch;
     private final int agingInterval;
     private final Map<Process, Integer> waitingTimeForAging = new HashMap<>();
+    private final List<String> executionOrder = new ArrayList<>();
 
     public PriorityScheduler(List<Process> processes, int contextSwitch, int agingInterval) {
         this.processes = processes;
         this.contextSwitch = contextSwitch;
         this.agingInterval = agingInterval;
         for (Process p : processes) {
-            // Initialize state
             p.setRemainingTime(p.getBurstTime());
             waitingTimeForAging.put(p, 0);
         }
@@ -25,41 +25,32 @@ public class PriorityScheduler {
         int completedCount = 0;
         Process lastProcess = null;
 
-        // Sort by arrival time primarily to ensure correct initial order
         processes.sort(Comparator.comparingInt(Process::getArrivalTime));
 
         while (completedCount < processes.size()) {
             Process current = selectProcess(currentTime);
 
-            // 1. CPU Idle (No process arrived yet)
             if (current == null) {
                 currentTime++;
-                // Even if idle, waiting processes must age
                 updateAgingTimers(currentTime, null);
                 continue;
             }
 
-            // 2. Context Switch
-            // We only switch if there was a previous process and it's different from current
             if (lastProcess != null && lastProcess != current) {
                 for (int i = 0; i < contextSwitch; i++) {
                     currentTime++;
-                    // During context switch, NO ONE is running, so everyone ages
                     updateAgingTimers(currentTime, null);
                 }
             }
 
-            // 3. Execute Process (1 unit)
-            // Reset aging for the running process immediately
+            executionOrder.add(current.getName());
             waitingTimeForAging.put(current, 0);
 
             current.setRemainingTime(current.getRemainingTime() - 1);
             currentTime++;
 
-            // 4. Update Aging for OTHERS
             updateAgingTimers(currentTime, current);
 
-            // 5. Check Completion
             if (current.getRemainingTime() == 0) {
                 completedCount++;
                 current.setCompletionTime(currentTime);
@@ -69,6 +60,38 @@ public class PriorityScheduler {
 
             lastProcess = current;
         }
+        
+        printResults();
+    }
+    
+    private void printResults() {
+        System.out.println("\n===== Priority Scheduling (with Aging) =====");
+        
+        System.out.print("Execution Order: ");
+        String prev = "";
+        for (String p : executionOrder) {
+            if (!p.equals(prev)) {
+                System.out.print(p + " ");
+                prev = p;
+            }
+        }
+        System.out.println();
+        
+        double totalWT = 0;
+        double totalTAT = 0;
+        
+        System.out.println("\nProcess Details:");
+        processes.sort(Comparator.comparing(Process::getName));
+        
+        for (Process p : processes) {
+            System.out.println(p.getName() + " - Waiting Time: " + 
+                p.getWaitingTime() + ", Turnaround Time: " + p.getTurnaroundTime());
+            totalWT += p.getWaitingTime();
+            totalTAT += p.getTurnaroundTime();
+        }
+        
+        System.out.printf("\nAverage Waiting Time: %.2f\n", totalWT / processes.size());
+        System.out.printf("Average Turnaround Time: %.2f\n", totalTAT / processes.size());
     }
 
     /**
@@ -101,8 +124,6 @@ public class PriorityScheduler {
         for (Process p : processes) {
             if (p.getArrivalTime() <= currentTime && p.getRemainingTime() > 0) {
 
-                // Calculate Effective Priority
-                // Integer division floors the result (e.g., 9/5 = 1)
                 int ageFactor = waitingTimeForAging.getOrDefault(p, 0) / agingInterval;
                 int effectivePriority = p.getPriorityTime() - ageFactor;
 
@@ -110,10 +131,6 @@ public class PriorityScheduler {
                     bestEffectivePriority = effectivePriority;
                     best = p;
                 } else if (effectivePriority == bestEffectivePriority) {
-                    // TIE BREAKER:
-                    // Use strict less than (<) for Arrival Time.
-                    // This guarantees that if Arrival Times are equal, we keep the
-                    // 'best' we already found (which appeared earlier in the list).
                     if (best == null || p.getArrivalTime() < best.getArrivalTime()) {
                         best = p;
                     }

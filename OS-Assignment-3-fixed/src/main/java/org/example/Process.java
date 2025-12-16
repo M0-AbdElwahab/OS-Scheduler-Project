@@ -9,7 +9,7 @@ public class Process {
     private int turnaroundTime;
     private int completionTime;
     private String name;
-    private int quantum; // For AG Scheduling
+    private int quantum;
 
     public Process(int arriveTime, int burstTime, int priorityTime, String name) {
         this.name = name;
@@ -23,7 +23,7 @@ public class Process {
         this.quantum = 0;
     }
 
-    // Copy constructor for AG scheduling
+
     public Process(Process other) {
         this.name = other.name;
         this.arrivalTime = other.arrivalTime;
@@ -36,7 +36,6 @@ public class Process {
         this.quantum = other.quantum;
     }
 
-    // Getters
     public int getArrivalTime() { return arrivalTime; }
     public int getBurstTime() { return burstTime; }
     public int getRemainingTime() { return remainingTime; }
@@ -47,8 +46,6 @@ public class Process {
     public String getName() { return name; }
     public int getQuantum() { return quantum; }
 
-    // Setters
-    public void setArrivalTime(int arrivalTime) { this.arrivalTime = arrivalTime; }
     public void setBurstTime(int burstTime) { this.burstTime = burstTime; }
     public void setRemainingTime(int remainingTime) { this.remainingTime = remainingTime; }
     public void setPriorityTime(int priorityTime) { this.priorityTime = priorityTime; }
@@ -58,7 +55,6 @@ public class Process {
     public void setName(String name) { this.name = name; }
     public void setQuantum(int quantum) { this.quantum = quantum; }
 
-    // Aliases for Round Robin compatibility
     public int getRemainingBurstTime() {
         return remainingTime;
     }
@@ -67,7 +63,6 @@ public class Process {
         this.remainingTime = remainingBurstTime;
     }
 
-    // Completion helper
     public boolean isCompleted() {
         return remainingTime <= 0;
     }

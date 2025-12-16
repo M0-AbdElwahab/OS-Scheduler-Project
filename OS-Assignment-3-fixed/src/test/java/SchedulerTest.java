@@ -201,153 +201,153 @@ public class SchedulerTest {
 
     // ==================== PRIORITY TESTS ====================
 
-//    @Test
-//    @DisplayName("Priority Test Case 1: Basic mixed arrivals")
-//    public void testPriority_TestCase1() {
-//        List<Process> processes = new ArrayList<>();
-//        processes.add(new Process(0, 8, 3, "P1"));
-//        processes.add(new Process(1, 4, 1, "P2"));
-//        processes.add(new Process(2, 2, 4, "P3"));
-//        processes.add(new Process(3, 1, 2, "P4"));
-//        processes.add(new Process(4, 3, 5, "P5"));
-//
-//        PriorityScheduler priority = new PriorityScheduler(processes, 1, 5);
-//        priority.run();
-//
-//        List<ExpectedResult> expected = Arrays.asList(
-//                new ExpectedResult("P1", 15, 23),
-//                new ExpectedResult("P2", 1, 5),
-//                new ExpectedResult("P3", 21, 23),
-//                new ExpectedResult("P4", 6, 7),
-//                new ExpectedResult("P5", 21, 24)
-//        );
-//
-//        verifyResults(priority.getProcesses(), expected, 12.8, 16.4);
-//    }
-//
-//    @Test
-//    @DisplayName("Priority Test Case 2: All processes arrive at time 0")
-//    public void testPriority_TestCase2() {
-//        List<Process> processes = new ArrayList<>();
-//        processes.add(new Process(0, 6, 3, "P1"));
-//        processes.add(new Process(0, 3, 1, "P2"));
-//        processes.add(new Process(0, 8, 2, "P3"));
-//        processes.add(new Process(0, 4, 4, "P4"));
-//        processes.add(new Process(0, 2, 5, "P5"));
-//
-//        PriorityScheduler priority = new PriorityScheduler(processes, 1, 5);
-//        priority.run();
-//
-//        List<ExpectedResult> expected = Arrays.asList(
-//                new ExpectedResult("P1", 32, 38),
-//                new ExpectedResult("P2", 0, 3),
-//                new ExpectedResult("P3", 23, 31),
-//                new ExpectedResult("P4", 36, 40),
-//                new ExpectedResult("P5", 31, 33)
-//        );
-//
-//        verifyResults(priority.getProcesses(), expected, 24.4, 29.0);
-//    }
-//
-//    @Test
-//    @DisplayName("Priority Test Case 3: Varied burst times with starvation risk")
-//    public void testPriority_TestCase3() {
-//        List<Process> processes = new ArrayList<>();
-//        processes.add(new Process(0, 10, 5, "P1"));
-//        processes.add(new Process(2, 5, 1, "P2"));
-//        processes.add(new Process(5, 3, 2, "P3"));
-//        processes.add(new Process(8, 7, 1, "P4"));
-//        processes.add(new Process(10, 2, 3, "P5"));
-//
-//        PriorityScheduler priority = new PriorityScheduler(processes, 1, 4);
-//        priority.run();
-//
-//        List<ExpectedResult> expected = Arrays.asList(
-//                new ExpectedResult("P1", 29, 39),
-//                new ExpectedResult("P2", 1, 6),
-//                new ExpectedResult("P3", 18, 21),
-//                new ExpectedResult("P4", 14, 21),
-//                new ExpectedResult("P5", 19, 21)
-//        );
-//
-//        verifyResults(priority.getProcesses(), expected, 16.2, 21.6);
-//    }
-//
-//    @Test
-//    @DisplayName("Priority Test Case 4: Large bursts with gaps in arrivals")
-//    public void testPriority_TestCase4() {
-//        List<Process> processes = new ArrayList<>();
-//        processes.add(new Process(0, 12, 2, "P1"));
-//        processes.add(new Process(4, 9, 3, "P2"));
-//        processes.add(new Process(8, 15, 1, "P3"));
-//        processes.add(new Process(12, 6, 4, "P4"));
-//        processes.add(new Process(16, 11, 2, "P5"));
-//        processes.add(new Process(20, 5, 5, "P6"));
-//
-//        PriorityScheduler priority = new PriorityScheduler(processes, 2, 6);
-//        priority.run();
-//
-//        List<ExpectedResult> expected = Arrays.asList(
-//                new ExpectedResult("P1", 38, 50),
-//                new ExpectedResult("P2", 120, 129),
-//                new ExpectedResult("P3", 65, 80),
-//                new ExpectedResult("P4", 121, 127),
-//                new ExpectedResult("P5", 100, 111),
-//                new ExpectedResult("P6", 117, 122)
-//        );
-//
-//        verifyResults(priority.getProcesses(), expected, 93.5, 103.17);
-//    }
-//
-//    @Test
-//    @DisplayName("Priority Test Case 5: Short bursts with high frequency")
-//    public void testPriority_TestCase5() {
-//        List<Process> processes = new ArrayList<>();
-//        processes.add(new Process(0, 3, 3, "P1"));
-//        processes.add(new Process(1, 2, 1, "P2"));
-//        processes.add(new Process(2, 4, 2, "P3"));
-//        processes.add(new Process(3, 1, 4, "P4"));
-//        processes.add(new Process(4, 3, 5, "P5"));
-//
-//        PriorityScheduler priority = new PriorityScheduler(processes, 1, 3);
-//        priority.run();
-//
-//        List<ExpectedResult> expected = Arrays.asList(
-//                new ExpectedResult("P1", 8, 11),
-//                new ExpectedResult("P2", 1, 3),
-//                new ExpectedResult("P3", 11, 15),
-//                new ExpectedResult("P4", 11, 12),
-//                new ExpectedResult("P5", 14, 17)
-//        );
-//
-//        verifyResults(priority.getProcesses(), expected, 9.0, 11.6);
-//    }
-//
-//    @Test
-//    @DisplayName("Priority Test Case 6: Mixed scenario - comprehensive test")
-//    public void testPriority_TestCase6() {
-//        List<Process> processes = new ArrayList<>();
-//        processes.add(new Process(0, 14, 4, "P1"));
-//        processes.add(new Process(3, 7, 2, "P2"));
-//        processes.add(new Process(6, 10, 5, "P3"));
-//        processes.add(new Process(9, 5, 1, "P4"));
-//        processes.add(new Process(12, 8, 3, "P5"));
-//        processes.add(new Process(15, 4, 6, "P6"));
-//
-//        PriorityScheduler priority = new PriorityScheduler(processes, 1, 5);
-//        priority.run();
-//
-//        List<ExpectedResult> expected = Arrays.asList(
-//                new ExpectedResult("P1", 46, 60),
-//                new ExpectedResult("P2", 12, 19),
-//                new ExpectedResult("P3", 55, 65),
-//                new ExpectedResult("P4", 4, 9),
-//                new ExpectedResult("P5", 26, 34),
-//                new ExpectedResult("P6", 54, 58)
-//        );
-//
-//        verifyResults(priority.getProcesses(), expected, 32.83, 40.83);
-//    }
+   @Test
+   @DisplayName("Priority Test Case 1: Basic mixed arrivals")
+   public void testPriority_TestCase1() {
+       List<Process> processes = new ArrayList<>();
+       processes.add(new Process(0, 8, 3, "P1"));
+       processes.add(new Process(1, 4, 1, "P2"));
+       processes.add(new Process(2, 2, 4, "P3"));
+       processes.add(new Process(3, 1, 2, "P4"));
+       processes.add(new Process(4, 3, 5, "P5"));
+
+       PriorityScheduler priority = new PriorityScheduler(processes, 1, 5);
+       priority.run();
+
+       List<ExpectedResult> expected = Arrays.asList(
+               new ExpectedResult("P1", 15, 23),
+               new ExpectedResult("P2", 1, 5),
+               new ExpectedResult("P3", 21, 23),
+               new ExpectedResult("P4", 6, 7),
+               new ExpectedResult("P5", 21, 24)
+       );
+
+       verifyResults(priority.getProcesses(), expected, 12.8, 16.4);
+   }
+
+   @Test
+   @DisplayName("Priority Test Case 2: All processes arrive at time 0")
+   public void testPriority_TestCase2() {
+       List<Process> processes = new ArrayList<>();
+       processes.add(new Process(0, 6, 3, "P1"));
+       processes.add(new Process(0, 3, 1, "P2"));
+       processes.add(new Process(0, 8, 2, "P3"));
+       processes.add(new Process(0, 4, 4, "P4"));
+       processes.add(new Process(0, 2, 5, "P5"));
+
+       PriorityScheduler priority = new PriorityScheduler(processes, 1, 5);
+       priority.run();
+
+       List<ExpectedResult> expected = Arrays.asList(
+               new ExpectedResult("P1", 32, 38),
+               new ExpectedResult("P2", 0, 3),
+               new ExpectedResult("P3", 23, 31),
+               new ExpectedResult("P4", 36, 40),
+               new ExpectedResult("P5", 31, 33)
+       );
+
+       verifyResults(priority.getProcesses(), expected, 24.4, 29.0);
+   }
+
+   @Test
+   @DisplayName("Priority Test Case 3: Varied burst times with starvation risk")
+   public void testPriority_TestCase3() {
+       List<Process> processes = new ArrayList<>();
+       processes.add(new Process(0, 10, 5, "P1"));
+       processes.add(new Process(2, 5, 1, "P2"));
+       processes.add(new Process(5, 3, 2, "P3"));
+       processes.add(new Process(8, 7, 1, "P4"));
+       processes.add(new Process(10, 2, 3, "P5"));
+
+       PriorityScheduler priority = new PriorityScheduler(processes, 1, 4);
+       priority.run();
+
+       List<ExpectedResult> expected = Arrays.asList(
+               new ExpectedResult("P1", 29, 39),
+               new ExpectedResult("P2", 1, 6),
+               new ExpectedResult("P3", 18, 21),
+               new ExpectedResult("P4", 14, 21),
+               new ExpectedResult("P5", 19, 21)
+       );
+
+       verifyResults(priority.getProcesses(), expected, 16.2, 21.6);
+   }
+
+   @Test
+   @DisplayName("Priority Test Case 4: Large bursts with gaps in arrivals")
+   public void testPriority_TestCase4() {
+       List<Process> processes = new ArrayList<>();
+       processes.add(new Process(0, 12, 2, "P1"));
+       processes.add(new Process(4, 9, 3, "P2"));
+       processes.add(new Process(8, 15, 1, "P3"));
+       processes.add(new Process(12, 6, 4, "P4"));
+       processes.add(new Process(16, 11, 2, "P5"));
+       processes.add(new Process(20, 5, 5, "P6"));
+
+       PriorityScheduler priority = new PriorityScheduler(processes, 2, 6);
+       priority.run();
+
+       List<ExpectedResult> expected = Arrays.asList(
+               new ExpectedResult("P1", 38, 50),
+               new ExpectedResult("P2", 120, 129),
+               new ExpectedResult("P3", 65, 80),
+               new ExpectedResult("P4", 121, 127),
+               new ExpectedResult("P5", 100, 111),
+               new ExpectedResult("P6", 117, 122)
+       );
+
+       verifyResults(priority.getProcesses(), expected, 93.5, 103.17);
+   }
+
+   @Test
+   @DisplayName("Priority Test Case 5: Short bursts with high frequency")
+   public void testPriority_TestCase5() {
+       List<Process> processes = new ArrayList<>();
+       processes.add(new Process(0, 3, 3, "P1"));
+       processes.add(new Process(1, 2, 1, "P2"));
+       processes.add(new Process(2, 4, 2, "P3"));
+       processes.add(new Process(3, 1, 4, "P4"));
+       processes.add(new Process(4, 3, 5, "P5"));
+
+       PriorityScheduler priority = new PriorityScheduler(processes, 1, 3);
+       priority.run();
+
+       List<ExpectedResult> expected = Arrays.asList(
+               new ExpectedResult("P1", 8, 11),
+               new ExpectedResult("P2", 1, 3),
+               new ExpectedResult("P3", 11, 15),
+               new ExpectedResult("P4", 11, 12),
+               new ExpectedResult("P5", 14, 17)
+       );
+
+       verifyResults(priority.getProcesses(), expected, 9.0, 11.6);
+   }
+
+   @Test
+   @DisplayName("Priority Test Case 6: Mixed scenario - comprehensive test")
+   public void testPriority_TestCase6() {
+       List<Process> processes = new ArrayList<>();
+       processes.add(new Process(0, 14, 4, "P1"));
+       processes.add(new Process(3, 7, 2, "P2"));
+       processes.add(new Process(6, 10, 5, "P3"));
+       processes.add(new Process(9, 5, 1, "P4"));
+       processes.add(new Process(12, 8, 3, "P5"));
+       processes.add(new Process(15, 4, 6, "P6"));
+
+       PriorityScheduler priority = new PriorityScheduler(processes, 1, 5);
+       priority.run();
+
+       List<ExpectedResult> expected = Arrays.asList(
+               new ExpectedResult("P1", 46, 60),
+               new ExpectedResult("P2", 12, 19),
+               new ExpectedResult("P3", 55, 65),
+               new ExpectedResult("P4", 4, 9),
+               new ExpectedResult("P5", 26, 34),
+               new ExpectedResult("P6", 54, 58)
+       );
+
+       verifyResults(priority.getProcesses(), expected, 32.83, 40.83);
+   }
 
     // ==================== EDGE CASE TESTS ====================
 
@@ -390,16 +390,8 @@ public class SchedulerTest {
         processes.add(new Process(3, 1, 2, "P4"));
         processes.add(new Process(4, 3, 5, "P5"));
 
-        // Use your specific Constructor: (Quantum, ContextSwitch)
-        RoundRobinScheduler rr = new RoundRobinScheduler(2, 1);
-
-        // Add processes manually as your code requires
-        for (Process p : processes) {
-            rr.addProcess(p);
-        }
-
-        // Use .schedule() instead of .run()
-        rr.schedule();
+        RoundRobin rr = new RoundRobin(processes, 2, 1);
+        rr.run();
 
         List<ExpectedResult> expected = Arrays.asList(
                 new ExpectedResult("P1", 19, 27),
@@ -423,9 +415,8 @@ public class SchedulerTest {
         processes.add(new Process(0, 4, 4, "P4"));
         processes.add(new Process(0, 2, 5, "P5"));
 
-        RoundRobinScheduler rr = new RoundRobinScheduler(3, 1);
-        for (Process p : processes) rr.addProcess(p);
-        rr.schedule();
+        RoundRobin rr = new RoundRobin(processes, 3, 1);
+        rr.run();
 
         List<ExpectedResult> expected = Arrays.asList(
                 new ExpectedResult("P1", 16, 22),
@@ -448,9 +439,8 @@ public class SchedulerTest {
         processes.add(new Process(8, 7, 1, "P4"));
         processes.add(new Process(10, 2, 3, "P5"));
 
-        RoundRobinScheduler rr = new RoundRobinScheduler(4, 1);
-        for (Process p : processes) rr.addProcess(p);
-        rr.schedule();
+        RoundRobin rr = new RoundRobin(processes, 4, 1);
+        rr.run();
 
         List<ExpectedResult> expected = Arrays.asList(
                 new ExpectedResult("P1", 21, 31),
@@ -474,9 +464,8 @@ public class SchedulerTest {
         processes.add(new Process(16, 11, 2, "P5"));
         processes.add(new Process(20, 5, 5, "P6"));
 
-        RoundRobinScheduler rr = new RoundRobinScheduler(5, 2);
-        for (Process p : processes) rr.addProcess(p);
-        rr.schedule();
+        RoundRobin rr = new RoundRobin(processes, 5, 2);
+        rr.run();
 
         List<ExpectedResult> expected = Arrays.asList(
                 new ExpectedResult("P1", 38, 50),
@@ -500,9 +489,8 @@ public class SchedulerTest {
         processes.add(new Process(3, 1, 4, "P4"));
         processes.add(new Process(4, 3, 5, "P5"));
 
-        RoundRobinScheduler rr = new RoundRobinScheduler(2, 1);
-        for (Process p : processes) rr.addProcess(p);
-        rr.schedule();
+        RoundRobin rr = new RoundRobin(processes, 2, 1);
+        rr.run();
 
         List<ExpectedResult> expected = Arrays.asList(
                 new ExpectedResult("P1", 7, 10),
@@ -526,9 +514,8 @@ public class SchedulerTest {
         processes.add(new Process(12, 8, 3, "P5"));
         processes.add(new Process(15, 4, 6, "P6"));
 
-        RoundRobinScheduler rr = new RoundRobinScheduler(4, 1);
-        for (Process p : processes) rr.addProcess(p);
-        rr.schedule();
+        RoundRobin rr = new RoundRobin(processes, 4, 1);
+        rr.run();
 
         List<ExpectedResult> expected = Arrays.asList(
                 new ExpectedResult("P1", 44, 58),
@@ -548,9 +535,8 @@ public class SchedulerTest {
         List<Process> processes = new ArrayList<>();
         processes.add(new Process(0, 5, 1, "P1"));
 
-        RoundRobinScheduler rr = new RoundRobinScheduler(2, 1);
-        for (Process p : processes) rr.addProcess(p);
-        rr.schedule();
+        RoundRobin rr = new RoundRobin(processes, 2, 1);
+        rr.run();
 
         Process result = processes.get(0);
 
@@ -571,9 +557,8 @@ public class SchedulerTest {
 
         // Quantum=10 is larger than any burst.
         // P1 runs 0-3. CS(1). P2 runs 4-6.
-        RoundRobinScheduler rr = new RoundRobinScheduler(10, 1);
-        for (Process p : processes) rr.addProcess(p);
-        rr.schedule();
+        RoundRobin rr = new RoundRobin(processes, 10, 1);
+        rr.run();
 
         List<ExpectedResult> expected = Arrays.asList(
                 new ExpectedResult("P1", 0, 3),
