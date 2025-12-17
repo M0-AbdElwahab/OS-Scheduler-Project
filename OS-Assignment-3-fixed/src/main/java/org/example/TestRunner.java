@@ -12,15 +12,13 @@ public class TestRunner {
         String agPath = "test_cases\\AG";
         String otherPath = "test_cases\\Other_Schedulers";
         
-        System.out.println("========================================");
-        System.out.println("       AG SCHEDULER TEST CASES");
-        System.out.println("========================================\n");
+        System.out.println("AG SCHEDULER TESTS");
+        System.out.println("==================\n");
         
         runAGTests(agPath);
         
-        System.out.println("\n========================================");
-        System.out.println("    OTHER SCHEDULERS TEST CASES");
-        System.out.println("========================================\n");
+        System.out.println("\nOTHER SCHEDULERS TESTS");
+        System.out.println("======================\n");
         
         runOtherSchedulersTests(otherPath);
     }
@@ -38,9 +36,7 @@ public class TestRunner {
         
         for (File file : files) {
             try {
-                System.out.println("\n══════════════════════════════════════");
-                System.out.println("Running: " + file.getName());
-                System.out.println("══════════════════════════════════════");
+                System.out.println("\n" + file.getName());
                 
                 String content = new String(Files.readAllBytes(file.toPath()));
                 JsonObject testCase = gson.fromJson(content, JsonObject.class);
@@ -88,9 +84,7 @@ public class TestRunner {
         
         for (File file : files) {
             try {
-                System.out.println("\n══════════════════════════════════════");
-                System.out.println("Running: " + file.getName());
-                System.out.println("══════════════════════════════════════");
+                System.out.println("\n" + file.getName());
                 
                 String content = new String(Files.readAllBytes(file.toPath()));
                 JsonObject testCase = gson.fromJson(content, JsonObject.class);
@@ -102,15 +96,15 @@ public class TestRunner {
                 
                 JsonArray processesJson = input.getAsJsonArray("processes");
                 
-                System.out.println("\n----- Preemptive SJF -----");
+                System.out.println("\nSJF:");
                 List<Process> sjfProcesses = parseProcesses(processesJson);
                 new PreemptiveSJF(sjfProcesses, contextSwitch).run();
                 
-                System.out.println("\n----- Round Robin -----");
+                System.out.println("\nRound Robin:");
                 List<Process> rrProcesses = parseProcesses(processesJson);
                 new RoundRobin(rrProcesses, rrQuantum, contextSwitch).run();
                 
-                System.out.println("\n----- Priority with Aging -----");
+                System.out.println("\nPriority:");
                 List<Process> priorityProcesses = parseProcesses(processesJson);
                 new PriorityScheduler(priorityProcesses, contextSwitch, agingInterval).run();
                 

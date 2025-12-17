@@ -1,14 +1,14 @@
 # CPU Scheduler Simulator
 
 ## Overview
-Implementation of various CPU scheduling algorithms for Operating Systems coursework.
+Implementation of various CPU scheduling algorithms.
 
 ## Schedulers Implemented
 
 1. **Preemptive Shortest Job First (SJF)**
 2. **Priority Scheduling with Aging**
 3. **Round Robin**
-4. **AG Scheduler** (Three-phase hybrid: FCFS → Priority → SJF)
+4. **AG Scheduler**
 
 ## Project Structure
 
@@ -28,7 +28,7 @@ OS-Assignment-3-fixed/
 │   │   ├── AGScheduler.java
 │   │   └── TestRunner.java
 │   └── test/java/
-│       └── SchedulerTest.java
+│       └── JSONTestRunner.java
 ├── test_cases/
 │   ├── AG/
 │   │   └── AG_test*.json (6 files)
@@ -40,13 +40,26 @@ OS-Assignment-3-fixed/
 ## Requirements
 
 - Java JDK 21+
-- Gson 2.10.1 (included in lib/)
+- Gson 2.10.1
+
+## Running Tests
+
+```bash
+# Compile
+javac -cp "lib\gson-2.10.1.jar;target\classes" -d target\test-classes src\test\java\JSONTestRunner.java
+
+# Run tests
+java -cp "lib\gson-2.10.1.jar;target\classes;target\test-classes" org.example.JSONTestRunner
+```
 
 ## Building and Running
 
 ### Quick Start (Windows)
 ```bash
-# Compile all files
+# Run everything
+run.bat
+
+# Or manually:
 javac -cp "lib/gson-2.10.1.jar" -d target/classes src/main/java/org/example/*.java
 
 # Run all test cases
